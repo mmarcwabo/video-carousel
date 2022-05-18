@@ -1,6 +1,6 @@
 //start video-carousel.js
 
-$(document).ready(function(){
+$(document).ready(function () {
 
     var $root = $(".video-carousel-root"),
         $slider = $root.find(".video-carousel-slider"),
@@ -11,47 +11,47 @@ $(document).ready(function(){
         $allSlideButtons = $root.find(".video-carousel-button-left, .video-carousel-button-right"),
         $slideText = $root.find(".video-carousel-text"),
         isAnimating = false,
-        transition = {"left":slideLeftTransition,"right":slideRightTransition},
-        slideTimer, myPlayer, video_counter=0;
+        transition = { "left": slideLeftTransition, "right": slideRightTransition },
+        slideTimer, myPlayer, video_counter = 0;
 
     setClasses();
     setText();
 
-    if (!supportsTransitions()) transition = {"left":slideLeftNoTransition,"right":slideRightNoTransition};
+    if (!supportsTransitions()) transition = { "left": slideLeftNoTransition, "right": slideRightNoTransition };
     $allSlideButtons.click(slideButtonClick);
     $leftButton.click(transition.left);
     $rightButton.click(transition.right);
     //slideTimer = setInterval(transition.right, 7000);
 
-    function slideButtonClick(){
+    function slideButtonClick() {
         clearInterval(slideTimer);
         destroyVideoPlayer();
     }
-    function slideLeftNoTransition(){
+    function slideLeftNoTransition() {
         $slider.prepend($slides.last());
         setClasses();
         setText();
     }
-    function slideRightNoTransition(){
+    function slideRightNoTransition() {
         $slider.append($slides.first());
         setClasses();
         setText();
     }
-    function slideLeftTransition(){
-        if(isAnimating) return;
+    function slideLeftTransition() {
+        if (isAnimating) return;
         isAnimating = true;
         $slideText.empty();
 
         $slider.css("left", -slideWidth + "px");
         $slider.prepend($slides.last());
         setClasses();
-        $slider.animate({left:"0px"}, 500, function(){
+        $slider.animate({ left: "0px" }, 500, function () {
             setText();
             isAnimating = false;
         });
     }
-    function slideRightTransition(){
-        if(isAnimating) return;
+    function slideRightTransition() {
+        if (isAnimating) return;
         isAnimating = true;
         $slideText.empty();
 
@@ -59,7 +59,7 @@ $(document).ready(function(){
         setClasses();
         $slider.prepend($slides.last().clone());
         $slides = $slider.children("div");
-        $slider.animate({left:-slideWidth + "px"}, 500, function(){
+        $slider.animate({ left: -slideWidth + "px" }, 500, function () {
             $slides.eq(0).remove();
             setClasses();
             $slider.css("left", "0px");
@@ -69,7 +69,7 @@ $(document).ready(function(){
     }
 
 
-    function setClasses(){
+    function setClasses() {
         $slides = $slider.children("div");
         $slides.removeClass();
         $slides.eq(0).addClass("level1");
@@ -79,46 +79,46 @@ $(document).ready(function(){
         $slides.eq(4).addClass("level1");
 
         $slides.off("click");
-        $slides.eq(2).on("click", function(){
-			var $this = $(this),
-				player_id = $this.attr("id");
+        $slides.eq(2).on("click", function () {
+            var $this = $(this),
+                player_id = $this.attr("id");
             clearInterval(slideTimer);
             createVideoPlayer($this.attr("data-vimeo-id"));
-            
-			dataLayer.push({'event': 'gaPushEvent','gaEventCategory': dataLayer[0].siteVersion+'_homepage','gaEventAction': 'click','gaEventLabel': player_id});
 
-            video_counter ++;
-            var s=s_gi(omniture_rsid);s.linkTrackVars = 'eVar5,eVar7,events';s.eVar5 = video_counter;s.eVar7 = player_id;s.linkTrackEvents="event5";s.events = 'event5';s.tl(this, 'o', 'Home');
-			
+            dataLayer.push({ 'event': 'gaPushEvent', 'gaEventCategory': dataLayer[0].siteVersion + '_homepage', 'gaEventAction': 'click', 'gaEventLabel': player_id });
+
+            video_counter++;
+            var s = s_gi(omniture_rsid); s.linkTrackVars = 'eVar5,eVar7,events'; s.eVar5 = video_counter; s.eVar7 = player_id; s.linkTrackEvents = "event5"; s.events = 'event5'; s.tl(this, 'o', 'Home');
+
         });
-        $slides.eq(1).on("click", function(){slideButtonClick(); transition.left();});
-        $slides.eq(3).on("click", function(){slideButtonClick(); transition.right();});
+        $slides.eq(1).on("click", function () { slideButtonClick(); transition.left(); });
+        $slides.eq(3).on("click", function () { slideButtonClick(); transition.right(); });
     }
-    function setText(){
+    function setText() {
         $slideText.html($slides.eq(2).find("p").html());
     }
 
-    function createVideoPlayer(source){
+    function createVideoPlayer(source) {
         var $container = $slides.eq(2).find(".panel"),
             playerWidth = $container.width(),
             playerHeight = $container.height(),
-            $iframe = $("<iframe class='video' src='//player.vimeo.com/video/"+source+"?title=0&byline=0&portrait=0' width='300' height='168' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>");
+            $iframe = $("<iframe class='video' src='//player.vimeo.com/video/" + source + "?title=0&byline=0&portrait=0' width='300' height='168' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>");
 
         $container.append($iframe);
         myPlayer = $f($iframe[0]);
         $slides.eq(2).off("click");
-        myPlayer.addEvent('ready', function() {
+        myPlayer.addEvent('ready', function () {
             myPlayer.api("play");
             myPlayer.addEvent('finish', destroyVideoPlayer);
         });
     }
-    function destroyVideoPlayer(){
-        if(myPlayer){
+    function destroyVideoPlayer() {
+        if (myPlayer) {
             var $slide = $slides.eq(2);
             myPlayer.api("pause");
             myPlayer = null;
             $slide.find("iframe").remove();
-            $slides.eq(2).on("click", function(){
+            $slides.eq(2).on("click", function () {
                 createVideoPlayer($(this).attr("data-vimeo-id"));
             });
         }
@@ -133,7 +133,7 @@ $(document).ready(function(){
         // Tests for vendor specific prop
         var v = ['Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
         p = p.charAt(0).toUpperCase() + p.substr(1);
-        for (var i=0; i<v.length; i++) {
+        for (var i = 0; i < v.length; i++) {
             if (typeof s[v[i] + p] == 'string') { return true; }
         }
         return false;
@@ -142,9 +142,9 @@ $(document).ready(function(){
 
 //start jquery-carousel3.js
 
-(function($) {
+(function ($) {
 
-    $.fn.carousel = function(options) {
+    $.fn.carousel = function (options) {
         return this.each(function () {
             var $root = $(this),
                 $slides = $root.children().addClass("slide"),
@@ -154,10 +154,10 @@ $(document).ready(function(){
                 $arrowPrevious = $("<div class='arrow arrow-previous'/>").appendTo($viewport),
                 $arrowNext = $("<div class='arrow arrow-next'/>").appendTo($viewport),
                 $pagerButtons,
-                defaults = {showPager:true},
+                defaults = { showPager: true },
                 settings = $.extend({}, defaults, options);
 
-            if(settings.showPager) buildPager();
+            if (settings.showPager) buildPager();
             showSlide(0);
             $root.show();
 
@@ -185,7 +185,7 @@ $(document).ready(function(){
                 $slides.removeClass("selected");
                 $slides.eq(index).addClass("selected");
 
-                if(settings.showPager){
+                if (settings.showPager) {
                     $pagerButtons.removeClass("selected");
                     $pagerButtons.eq(index).addClass("selected");
                 }
@@ -195,7 +195,7 @@ $(document).ready(function(){
 }(jQuery));
 
 //start mobile-video-carousel-nopage.js
-$(document).ready(function(){
+$(document).ready(function () {
 
     var $videoMobileRoot = $(".videos-mobile-root"),
         $slider = $videoMobileRoot.find(".slider"),
@@ -203,62 +203,62 @@ $(document).ready(function(){
         $players = $slides.find("iframe"),
         $arrowLeft = $videoMobileRoot.find(".arrow-left"),
         $arrowRight = $videoMobileRoot.find(".arrow-right"),
-		$allButtons = $videoMobileRoot.find(".arrow-left,.arrow-right"),
+        $allButtons = $videoMobileRoot.find(".arrow-left,.arrow-right"),
         slideWidth = $slides.width(),
         sliderTimer = setInterval(slideRight, 7000),
-        isAnimating, allPlayers = [], video_counter=0;
+        isAnimating, allPlayers = [], video_counter = 0;
 
-    	
+
     //Click Events
-    $allButtons.click(function(){clearInterval(sliderTimer); stopPlayers();});
+    $allButtons.click(function () { clearInterval(sliderTimer); stopPlayers(); });
     $arrowLeft.click(slideLeft);
     $arrowRight.click(slideRight);
 
-    function slideLeft(){
+    function slideLeft() {
         var currentIndex = parseInt($slider.css("left")) / -slideWidth;
-        if(currentIndex == 0) slideTo($slides.length - 1);
+        if (currentIndex == 0) slideTo($slides.length - 1);
         else slideTo(currentIndex - 1);
     }
-    function slideRight(){
+    function slideRight() {
         var currentIndex = parseInt($slider.css("left")) / -slideWidth;
-        if(currentIndex == $slides.length - 1) slideTo(0);
+        if (currentIndex == $slides.length - 1) slideTo(0);
         else slideTo(currentIndex + 1);
     }
-    function slideTo(index){
-        if(isAnimating) return;
-				isAnimating = true;
-        $slider.animate({"left":-slideWidth * index},500, function(){
+    function slideTo(index) {
+        if (isAnimating) return;
+        isAnimating = true;
+        $slider.animate({ "left": -slideWidth * index }, 500, function () {
             isAnimating = false;
         });
     }
-    
-    $(window).resize(function(){
-        slideWidth = $slides.width();        
+
+    $(window).resize(function () {
+        slideWidth = $slides.width();
     });
 
-	$players.each(function(){
-		var currentPlayer = $f(this);
-		allPlayers.push(currentPlayer);
-		currentPlayer.addEvent('ready', playerReady);
-    });	
-	function playerReady(player_id){
-		var player = $f(player_id);
-		player.addEvent('ready', function() {
-			player.addEvent('play', function(e){
-				clearInterval(sliderTimer);				
+    $players.each(function () {
+        var currentPlayer = $f(this);
+        allPlayers.push(currentPlayer);
+        currentPlayer.addEvent('ready', playerReady);
+    });
+    function playerReady(player_id) {
+        var player = $f(player_id);
+        player.addEvent('ready', function () {
+            player.addEvent('play', function (e) {
+                clearInterval(sliderTimer);
 
-				//ga('send', 'event', 'v1_homepage', 'video', player_id);
-                dataLayer.push({'event': 'gaPushEvent','gaEventCategory': dataLayer[0].siteVersion+'_homepage','gaEventAction': 'click','gaEventLabel': player_id});
-				
-                video_counter ++;
-                var s=s_gi(omniture_rsid);s.linkTrackVars = 'eVar5,eVar7,events';s.eVar5 = video_counter;s.eVar7 = player_id;s.linkTrackEvents="event5";s.events = 'event5';s.tl(this, 'o', 'Home');
-				
-			});
+                //ga('send', 'event', 'v1_homepage', 'video', player_id);
+                dataLayer.push({ 'event': 'gaPushEvent', 'gaEventCategory': dataLayer[0].siteVersion + '_homepage', 'gaEventAction': 'click', 'gaEventLabel': player_id });
+
+                video_counter++;
+                var s = s_gi(omniture_rsid); s.linkTrackVars = 'eVar5,eVar7,events'; s.eVar5 = video_counter; s.eVar7 = player_id; s.linkTrackEvents = "event5"; s.events = 'event5'; s.tl(this, 'o', 'Home');
+
+            });
         });
-	}
-	function stopPlayers(){
-        var i= 0, len = allPlayers.length;
-        for(i; i<len; i++){
+    }
+    function stopPlayers() {
+        var i = 0, len = allPlayers.length;
+        for (i; i < len; i++) {
             allPlayers[i].api("pause");
         }
     }

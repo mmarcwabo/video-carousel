@@ -1,3 +1,8 @@
+.container {
+	background-color: goldenrod;
+	padding-top: 61px;
+	padding-bottom: 61px;
+}
 .carousel-root,
 .carousel-root * {
 	margin: 0;
@@ -74,7 +79,7 @@
 }
 .carousel-root .viewport {
 	padding: 0 80px;
-	min-height: 89px;
+	min-height: 178px;
 	text-align: center;
 } /*adjust to create left and right open area for arrows, min-height = arrow height*/
 
@@ -88,9 +93,6 @@
 	font-weight: bold;
 	margin-top: 14px;
 	font-style: normal;
-}
-.carousel-root .pager {
-	display: none;
 }
 
 .video-carousel-root,
