@@ -1,2 +1,6 @@
 images/
 wikipage/
+*.mp4
+Gruntfile.js
+*.json
+node_modules/
