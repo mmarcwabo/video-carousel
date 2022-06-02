@@ -17,6 +17,7 @@ $(document).ready(function () {
 
     setClasses();
     setText();
+    //addPlayButton(video);
 
     if (!supportsTransitions()) transition = { "left": slideLeftNoTransition, "right": slideRightNoTransition };
     $allSlideButtons.click(slideButtonClick);
@@ -103,25 +104,53 @@ $(document).ready(function () {
         video.play();
     }
     function pauseVideo() {
-        video.pause();        
+        video.pause();
     }
+
+    function addPlayButton(toVideo) {
+        var buttonContainer = $(".play-button-wrapper");
+        buttonContainer.html(
+            '<div title="Play video" class="play-gif" id="circle-play-b"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><path d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" /></svg></div>'
+        );
+    }
+
+    /* Tests purposes */
+    var $videos_ = $('.video');
+    var playButtonSGV = '<div title="Play video" class="play-gif" id="circle-play-b">';
+    playButtonSGV += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">';
+    playButtonSGV += '<path d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" /></svg></div>';
+
+    function count_videos() {
+        $videos_.each(async function (index) {
+            alert(index);
+        });
+    }
+    //count_videos();
+
+
+
+
+
 });
+
+// For the play bouton.
+// To do, make it a 
 
 const video = document.getElementById("video");
 const circlePlayButton = document.getElementById("circle-play-b");
 
 function togglePlay() {
-	if (video.paused || video.ended) {
-		video.play();
-	} else {
-		video.pause();
-	}
+    if (video.paused || video.ended) {
+        video.play();
+    } else {
+        video.pause();
+    }
 }
 
 circlePlayButton.addEventListener("click", togglePlay);
 video.addEventListener("playing", function () {
-	circlePlayButton.style.opacity = 0;
+    circlePlayButton.style.opacity = 0;
 });
 video.addEventListener("pause", function () {
-	circlePlayButton.style.opacity = 1;
+    circlePlayButton.style.opacity = 1;
 });

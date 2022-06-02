@@ -211,7 +211,8 @@
 	cursor: pointer;
 }
 
-.video-carousel-text {
+.video-carousel-text,
+#pager {
 	width: 280px;
 	margin: 8px auto;
 	text-align: center;
@@ -219,6 +220,14 @@
 	font-family: Roboto, Arial, sans-serif;
 	color: #f4f5fa;
 	display: block;
+}
+
+#pager a {
+	font-weight: bolder;
+	font-size: 33px;
+	text-decoration: inherit;
+	color: inherit;
+	cursor: pointer;
 }
 
 .video-carousel-text span {
@@ -251,66 +260,6 @@
 	display: none !important;
 }
 
-.playBtn {
-	width: 2em;
-	height: auto;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	vertical-align: middle;
-	z-index: 1;
-}
-
-.play button {
-	font: inherit;
-	line-height: inherit;
-	width: auto;
-}
-
-.play__control--overlaid {
-	background: rgba(26, 175, 255, .8);
-	border: 0;
-	border-radius: 100%;
-	box-shadow: 0 1px 1px rgb(0 0 0 / 15%);
-	color: #fff;
-	display: none;
-	left: 50%;
-	padding: 15px;
-	position: absolute;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 2;
-}
-
-.play__control {
-	background: 0 0;
-	border: 0;
-	border-radius: 3px;
-	color: inherit;
-	cursor: pointer;
-	flex-shrink: 0;
-	overflow: visible;
-	padding: 7px;
-	position: relative;
-	transition: all .3s ease;
-}
-
-.play {
-	-moz-osx-font-smoothing: auto;
-	-webkit-font-smoothing: subpixel-antialiased;
-	direction: ltr;
-	font-family: Avenir, "Avenir Next", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
-	font-variant-numeric: tabular-nums;
-	font-weight: 500;
-	line-height: 1.7;
-	max-width: 100%;
-	min-width: 200px;
-	position: relative;
-	text-shadow: none;
-	transition: box-shadow .3s ease;
-}
-
 .play-button-wrapper {
 	position: absolute;
 	top: 0;
@@ -323,7 +272,7 @@
 	width: 100%;
 	height: auto;
 	pointer-events: none;
-	
+
 }
 
 #circle-play-b {
@@ -334,10 +283,11 @@
 svg {
 	width: 48px;
 	height: 48px;
-	fill: #fff;
-	stroke: #fff;
+	fill: #6610f2;
+	stroke: #000;
 	cursor: pointer;
 	background-color: rgba(black, 0.2);
 	border-radius: 50%;
-	opacity: 0.9;
+	opacity: 0.8;
+	box-shadow: 0 1px 1px rgb(0 0 0 / 15%);
 }
