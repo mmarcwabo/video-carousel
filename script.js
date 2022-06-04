@@ -80,7 +80,9 @@ $(document).ready(function () {
         $slides.off("click");
 
         $slides.eq(1).on("click", function () { slideButtonClick(); transition.left(); });
+        $slides.eq(2).on("click", function () { playPause(this);});
         $slides.eq(3).on("click", function () { slideButtonClick(); transition.right(); });
+
     }
     function setText() {
         $slideText.html($slides.eq(2).find("p").html());
@@ -100,13 +102,6 @@ $(document).ready(function () {
         return false;
     }
 
-    function playVideo() {
-        video.play();
-    }
-    function pauseVideo() {
-        video.pause();
-    }
-
     function addPlayButton(toVideo) {
         var buttonContainer = $(".play-button-wrapper");
         buttonContainer.html(
@@ -120,37 +115,24 @@ $(document).ready(function () {
     playButtonSGV += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">';
     playButtonSGV += '<path d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" /></svg></div>';
 
-    function count_videos() {
-        $videos_.each(async function (index) {
-            alert(index);
-        });
-    }
-    //count_videos();
-
-
-
-
 
 });
 
-// For the play bouton.
-// To do, make it a 
+function playPause(video) {
 
-const video = document.getElementById("video");
-const circlePlayButton = document.getElementById("circle-play-b");
+    // Hide the play / pause bouton
 
-function togglePlay() {
-    if (video.paused || video.ended) {
+    /*var videos_ = document.getElementsByClassName("play-button-wrapper");
+    videos_.forEach(element => {
+        element.hide();
+    });*/
+
+    if (video.paused) {
         video.play();
+        playButtonSGV.hide();
+
     } else {
         video.pause();
+        playButtonSGV.show();
     }
 }
-
-circlePlayButton.addEventListener("click", togglePlay);
-video.addEventListener("playing", function () {
-    circlePlayButton.style.opacity = 0;
-});
-video.addEventListener("pause", function () {
-    circlePlayButton.style.opacity = 1;
-});

@@ -12,11 +12,6 @@
 	display: none;
 }
 
-/*.carousel-root .viewport {
-	position: relative;
-	overflow: hidden;
-}*/
-
 .carousel-root .slides {
 	position: relative;
 }
