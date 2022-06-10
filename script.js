@@ -1,5 +1,3 @@
-//start video-carousel.js
-
 $(document).ready(function () {
 
     var $root = $(".video-carousel-root"),
@@ -12,32 +10,37 @@ $(document).ready(function () {
         $slideText = $root.find(".video-carousel-text"),
         isAnimating = false,
         transition = { "left": slideLeftTransition, "right": slideRightTransition },
-        video = $('video'),
+        $video = $("video"),
         slideTimer, myPlayer, video_counter = 0;
 
     setClasses();
     setText();
-    //addPlayButton(video);
+    playPauseVideo();
+    /* addSVGPlayButton(); */
 
     if (!supportsTransitions()) transition = { "left": slideLeftNoTransition, "right": slideRightNoTransition };
     $allSlideButtons.click(slideButtonClick);
     $leftButton.click(transition.left);
     $rightButton.click(transition.right);
-    //slideTimer = setInterval(transition.right, 7000);
+    // Uncomment this line to enable auto slide
+    // slideTimer = setInterval(transition.right, 7000);
 
     function slideButtonClick() {
         clearInterval(slideTimer);
     }
+
     function slideLeftNoTransition() {
         $slider.prepend($slides.last());
         setClasses();
         setText();
     }
+
     function slideRightNoTransition() {
         $slider.append($slides.first());
         setClasses();
         setText();
     }
+
     function slideLeftTransition() {
         if (isAnimating) return;
         isAnimating = true;
@@ -51,6 +54,7 @@ $(document).ready(function () {
             isAnimating = false;
         });
     }
+
     function slideRightTransition() {
         if (isAnimating) return;
         isAnimating = true;
@@ -68,6 +72,7 @@ $(document).ready(function () {
             isAnimating = false;
         });
     }
+
     function setClasses() {
         $slides = $slider.children("div");
         $slides.removeClass();
@@ -80,13 +85,31 @@ $(document).ready(function () {
         $slides.off("click");
 
         $slides.eq(1).on("click", function () { slideButtonClick(); transition.left(); });
-        $slides.eq(2).on("click", function () { playPause(this);});
         $slides.eq(3).on("click", function () { slideButtonClick(); transition.right(); });
 
     }
+
+    function playPauseVideo() {
+
+        $slides = $slider.children("div");
+        $slides.find('video').on("click", function () {
+            var video = $slides.eq(2).find('video')[0];
+            var svg = $slides.eq(2).find('svg');
+            if (video.paused == true) {
+                pauseAllVideos();
+                video.play();
+                svg.css('display', 'none');
+            } else {
+                video.pause();
+                svg.css('display', 'block');
+            }
+        });
+    }
+
     function setText() {
         $slideText.html($slides.eq(2).find("p").html());
     }
+    
     function supportsTransitions() {
         var b = document.body || document.documentElement,
             s = b.style,
@@ -102,37 +125,11 @@ $(document).ready(function () {
         return false;
     }
 
-    function addPlayButton(toVideo) {
-        var buttonContainer = $(".play-button-wrapper");
-        buttonContainer.html(
-            '<div title="Play video" class="play-gif" id="circle-play-b"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><path d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" /></svg></div>'
-        );
+    function pauseAllVideos() {
+        $video.each(function () {
+            var video = this;
+            if (!video.paused) video.pause();
+        });
     }
-
-    /* Tests purposes */
-    var $videos_ = $('.video');
-    var playButtonSGV = '<div title="Play video" class="play-gif" id="circle-play-b">';
-    playButtonSGV += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">';
-    playButtonSGV += '<path d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" /></svg></div>';
-
-
 });
 
-function playPause(video) {
-
-    // Hide the play / pause bouton
-
-    /*var videos_ = document.getElementsByClassName("play-button-wrapper");
-    videos_.forEach(element => {
-        element.hide();
-    });*/
-
-    if (video.paused) {
-        video.play();
-        playButtonSGV.hide();
-
-    } else {
-        video.pause();
-        playButtonSGV.show();
-    }
-}

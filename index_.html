@@ -3,6 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Video Carousel</title>
 	<link rel="stylesheet" href="./style.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -13,7 +14,7 @@
 
 <body>
 	<!-- partial:index.partial.html -->
-	<div class="container">
+	<div id="vc_slider_container" class="container">
 		<div id="videos">
 			<div class="inner">
 				<div class="video-carousel-root">
@@ -23,7 +24,7 @@
 							<div class="level1">
 								<div class="panel">
 									<div class="poster">
-										<video class="video" width="544" height="306" >
+										<video class="video" width="544" height="306">
 											<source src="./A.mp4" type="video/mp4">
 										</video>
 										<div class="play-button-wrapper">
@@ -41,7 +42,7 @@
 							<div class="level1">
 								<div class="panel">
 									<div class="poster">
-										<video class="video" width="544" height="306" >
+										<video class="video" width="544" height="306">
 											<source src="./A.mp4" type="video/mp4">
 										</video>
 										<div class="play-button-wrapper">
@@ -60,7 +61,7 @@
 							<div class="level1">
 								<div class="panel">
 									<div class="poster">
-										<video class="video" width="544" height="306" >
+										<video class="video" width="544" height="306">
 											<source src="./B.mp4" type="video/mp4">
 										</video>
 										<div class="play-button-wrapper">
@@ -79,7 +80,7 @@
 							<div class="level1">
 								<div class="panel">
 									<div class="poster">
-										<video class="video" width="544" height="306" >
+										<video class="video" width="544" height="306">
 											<source src="./A.mp4" type="video/mp4">
 										</video>
 										<div class="play-button-wrapper">
@@ -98,7 +99,7 @@
 							<div class="level1">
 								<div class="panel">
 									<div class="poster">
-										<video class="video" width="544" height="306" >
+										<video class="video" width="544" height="306">
 											<source src="./A.mp4" type="video/mp4">
 										</video>
 										<div class="play-button-wrapper">
@@ -117,8 +118,8 @@
 							<div class="level1">
 								<div class="panel">
 									<div class="poster">
-										<video class="video" width="544" height="306" >
-											<source src="./A.mp4" type="video/mp4">
+										<video class="video" width="544" height="306">
+											<source src="./B.mp4" type="video/mp4">
 										</video>
 										<div class="play-button-wrapper">
 											<div title="Play video" class="play-gif" id="circle-play-b">
@@ -135,7 +136,7 @@
 							<div class="level2">
 								<div class="panel">
 									<div class="poster">
-										<video class="video" width="544" height="306" >
+										<video class="video" width="544" height="306">
 											<source src="./A.mp4" type="video/mp4">
 										</video>
 										<div class="play-button-wrapper">
@@ -153,7 +154,7 @@
 							<div class="level3">
 								<div class="panel">
 									<div class="poster">
-										<video class="video" width="544" height="306" >
+										<video class="video" width="544" height="306">
 											<source src="./A.mp4" type="video/mp4">
 										</video>
 										<div class="play-button-wrapper">
@@ -171,7 +172,7 @@
 							<div class="level2">
 								<div class="panel">
 									<div class="poster">
-										<video class="video" width="544" height="306" >
+										<video class="video" width="544" height="306">
 											<source src="./A.mp4" type="video/mp4">
 										</video>
 										<div class="play-button-wrapper">
@@ -189,7 +190,7 @@
 							<div class="level1">
 								<div class="panel">
 									<div class="poster">
-										<video class="video" width="544" height="306" >
+										<video class="video" width="544" height="306">
 											<source src="./A.mp4" type="video/mp4">
 										</video>
 										<div class="play-button-wrapper">
@@ -225,19 +226,6 @@
 
 	<script src="./script.js"></script>
 	<script>
-
-		var allVideos = document.getElementsByTagName('video');
-		var allPlayButtonContainers = document.getElementsByClassName('play-button-wrapper');
-
-		var playButtonSGV = '<div title="Play video" class="play-gif" id="circle-play-b">';
-		playButtonSGV += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">';
-		playButtonSGV += '<path d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" /></svg></div>';
-
-		/* 		for (var i = 0; i < allPlayButtonContainers.length; i++) {
-					//alert(i + ' ' + allVideos[i].id);
-					allPlayButtonContainers[i].innerHTML = playButtonSGV;
-				} */
-
 		$(document).ready(function () {
 			var $pages = $(".video").length,
 				$pager = $("#pager"),
@@ -248,7 +236,6 @@
 			}
 			$pager.html("<p>" + dots + "</p>");
 		});
-
 	</script>
 
 </body>
