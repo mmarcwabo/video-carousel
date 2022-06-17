@@ -16,7 +16,6 @@ $(document).ready(function () {
     setClasses();
     setText();
     playPauseVideo();
-    /* addSVGPlayButton(); */
 
     if (!supportsTransitions()) transition = { "left": slideLeftNoTransition, "right": slideRightNoTransition };
     $allSlideButtons.click(slideButtonClick);
@@ -84,8 +83,10 @@ $(document).ready(function () {
 
         $slides.off("click");
 
+        /* $slides.eq(0).on("click", function () { slideButtonClick(); transition.left();}); */
         $slides.eq(1).on("click", function () { slideButtonClick(); transition.left(); });
         $slides.eq(3).on("click", function () { slideButtonClick(); transition.right(); });
+        /* $slides.eq(4).on("click", function () { slideButtonClick(); transition.right(); }); */
 
     }
 
@@ -109,7 +110,7 @@ $(document).ready(function () {
     function setText() {
         $slideText.html($slides.eq(2).find("p").html());
     }
-    
+
     function supportsTransitions() {
         var b = document.body || document.documentElement,
             s = b.style,
@@ -132,4 +133,3 @@ $(document).ready(function () {
         });
     }
 });
-
