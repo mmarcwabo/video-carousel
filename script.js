@@ -1,3 +1,6 @@
+/*
+Video Carousel v1.0
+*/
 $(document).ready(function () {
 
     var $root = $(".video-carousel-root"),
