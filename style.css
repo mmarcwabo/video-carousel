@@ -1,7 +1,10 @@
 html,
 body {
+	margin: 0px;
 	height: 100%;
 	width: 100%;
+	background-color: #6610f2 !important;
+	overflow: hidden;
 }
 
 .carousel-root,
@@ -229,17 +232,23 @@ svg {
 	height: 400px;
 }
 
-/* Make the videos responsive */
+div.inner,
+#videos {
+	max-width: 100%;
+	height: auto;
+	align-content: center;
+}
 
-@media only screen and (max-width: 40em) {
+/*
+* For mobile and tablets screens
+*/
+@media only screen and (max-width: 768px) {
 
+	/* For debug purpose */
 	body {
-		margin:0px;
-		width:100%;
-		height:100%;
-		overflow:auto;
-		background-color: #000;
-	  }
+		background-color: aquamarine ! important;
+	}
+
 	.level1,
 	.level2 {
 		opacity: 0;
@@ -259,11 +268,11 @@ svg {
 	}
 
 	.video-carousel-button-left {
-		left: 71px;
+		left: 143px ! important;
 	}
 
 	.video-carousel-button-right {
-		right: 4px;
+		right: 143px ! important;
 	}
 
 	.video-carousel-slider div .panel,
@@ -276,15 +285,18 @@ svg {
 	}
 
 	.video-carousel-viewport {
-		width: 495px;
-		height: 190px;
+		width: 100%;
+		height: 200px;
 		margin: 0;
 		padding: 45px 0px 0px 0px;
 		overflow: hidden;
 	}
 
-	.video-carousel-root, .inner, .container, #videos {
-		width: 100%;
+	.video-carousel-root,
+	.inner,
+	.container,
+	#videos {
+		width: 768px ! important;
 		height: auto;
 	}
 
@@ -310,13 +322,4 @@ svg {
 		height: 400px;
 		display: flexbox;
 	}
-
-
-}
-
-div.inner,
-#videos {
-	max-width: 100%;
-	height: auto;
-	align-content: center;
 }
