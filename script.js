@@ -25,6 +25,8 @@ $(document).ready(function () {
     // slideTimer = setInterval(transition.right, 7000);
 
     function slideButtonClick() {
+        pauseAllVideos();
+        resetPlayButtonsStatus();
         clearInterval(slideTimer);
     }
 
@@ -83,10 +85,8 @@ $(document).ready(function () {
 
         $slides.off("click");
 
-        /* $slides.eq(0).on("click", function () { slideButtonClick(); transition.left();}); */
         $slides.eq(1).on("click", function () { slideButtonClick(); transition.left(); });
         $slides.eq(3).on("click", function () { slideButtonClick(); transition.right(); });
-        /* $slides.eq(4).on("click", function () { slideButtonClick(); transition.right(); }); */
 
     }
 
@@ -128,8 +128,17 @@ $(document).ready(function () {
 
     function pauseAllVideos() {
         $video.each(function () {
-            var video = this;
-            if (!video.paused) video.pause();
+            $(this).get(0).pause();
         });
     }
+
+    function resetPlayButtonsStatus() {
+        $('svg').each(function () {
+            $(this).css('display', 'block');
+        });
+    }
+
+    $video.on("ended", function(){
+        resetPlayButtonsStatus();
+    });
 });
