@@ -1,0 +1,679 @@
+{layout header="y" footer="y" leftcolumn="n" rightcolumn="n" fullwidth="y" nosidemargins="y" actionbuttons="y" topbar="y" pagetopbar="y" pagebottombar="y"}
+
+{HTML()}
+<style>
+.carousel-root,
+.carousel-root * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.carousel-root {
+	position: relative;
+	display: none;
+}
+
+.carousel-root .slides {
+	position: relative;
+}
+
+.carousel-root .slide {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	z-index: 1;
+	transition: opacity 0.5s;
+	background-color: #f0f0f0;
+}
+
+.carousel-root .slide.selected {
+	opacity: 1;
+	position: relative;
+	z-index: 10;
+}
+
+.carousel-root .slide>img {
+	display: block;
+	width: 100%;
+}
+
+.carousel-root .arrow {
+	position: absolute;
+	top: 50%;
+	margin-top: -36px;
+	cursor: pointer;
+	width: 34px;
+	height: 72px;
+	z-index: 10000;
+}
+
+.carousel-root .arrow-previous {
+	left: 0;
+}
+
+.carousel-root .arrow-next {
+	right: 0;
+}
+
+.carousel-root .viewport {
+	padding: 0 80px;
+	min-height: 178px;
+	text-align: center;
+}
+
+.carousel-root .viewport p {
+	font-style: italic;
+	font-weight: 300;
+	color: #5a2503;
+}
+
+.video-carousel-root,
+.video-carousel-root * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.video-carousel-root {
+	width: 750px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.video-carousel-viewport {
+	width: 750px;
+	height: 190px;
+	margin: 0 auto;
+	padding: 45px 0;
+	overflow: hidden;
+
+
+}
+
+.video-carousel-slider {
+	width: 5000px;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+.video-carousel-slider>div {
+	float: left;
+	width: 150px;
+	height: 84px;
+	position: relative;
+	z-index: 0;
+}
+
+.video-carousel-slider div.level1 {
+	z-index: 1;
+}
+
+.video-carousel-slider div.level2 {
+	z-index: 2;
+}
+
+.video-carousel-slider div.level3 {
+	z-index: 3;
+}
+
+.video-carousel-slider div .panel {
+	position: absolute;
+	width: 110%;
+	height: 110%;
+	top: 0;
+	left: 0;
+	background-color: #000;
+	-moz-transition: width 0.5s, height 0.5s, top 0.5s, left 0.5s;
+	-o-transition: width 0.5s, height 0.5s, top 0.5s, left 0.5s;
+	-webkit-transition: width 0.5s, height 0.5s, top 0.5s, left 0.5s;
+	transition: width 0.5s, height 0.5s, top 0.5s, left 0.5s;
+}
+
+.video-carousel-slider div.level2 .panel {
+	width: 165%;
+	height: 165%;
+	top: -27%;
+	left: -27%;
+}
+
+.video-carousel-slider div.level3 .panel {
+	width:220%;
+	height: 220%;
+	top: -55%;
+	left: -55%;
+}
+
+.video-carousel-slider div.level3 .panel .poster .button {
+	display: block;
+}
+
+.video-carousel-slider div .panel .video {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.video-carousel-button-left,
+.video-carousel-button-right {
+	position: absolute;
+	top: 75px;
+	cursor: pointer;
+}
+
+.video-carousel-button-left {
+	left: -40px;
+}
+
+.video-carousel-button-right {
+	right: -40px;
+}
+
+.video-carousel-text,
+#pager {
+	width: 280px;
+	margin: 8px auto;
+	text-align: center;
+	font-size: 14px;
+	font-family: Roboto, Arial, sans-serif;
+	color: #f4f5fa;
+	display: block;
+}
+
+#pager a {
+	font-weight: bolder;
+	font-size: 37px;
+	text-decoration: inherit;
+	color: inherit;
+	cursor: pointer;
+}
+
+.video-carousel-text span {
+	font-weight: bold;
+	display: block;
+}
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+.video-carousel-slider div .panel {
+	-webkit-box-shadow: 0 10px 10px -5px rgba(122, 122, 122, 1);
+	-moz-box-shadow: 0 10px 10px -5px rgba(122, 122, 122, 1);
+	box-shadow: 0 10px 10px -5px rgba(122, 122, 122, 1);
+}
+
+.video-carousel-slider div.level3 .panel {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+.play-button-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: auto;
+	pointer-events: none;
+
+}
+
+#circle-play-b {
+	cursor: pointer;
+	pointer-events: auto;
+}
+
+svg {
+	width: 48px;
+	height: 48px;
+	fill: #6610f2;
+	stroke: #000;
+	cursor: pointer;
+	background-color: rgba(black, 0.2);
+	border-radius: 50%;
+	opacity: 0.8;
+	box-shadow: 0 1px 1px rgb(0 0 0 / 15%);
+}
+
+.video-carousel-button-left,
+.video-carousel-button-right {
+	width: 38px;
+	height: 38px;
+}
+
+div.container {
+	transform: scale(1);
+	transform-origin: 0% 0% 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #6610f2;
+	padding-top: 61px;
+	padding-bottom: 61px;
+
+}
+</style>
+<ul style="color: #fff;">
+    <li>Add a js function to make sure only on video is playing at a time, ie play one, pause other</li>
+    <li style="text-decoration:line-through;">Make the section responsive and the slides bigger</li>
+    <li>Make 2 and 3rd level videos to hide on mobile screens</li>
+    <li>Does it need keys (left, right keybord keys) navigation??</li>
+    <li style="text-decoration:line-through;">Add video pager</li>
+    <li>Clean the code: uncss and unjs the module</li>
+</ul>
+
+<div class="container">
+<div id="videos">
+			<div class="inner">
+				<div class="video-carousel-root">
+					<div class="video-carousel-viewport">
+						<div class="video-carousel-slider clearfix" style="left: 0px;">
+
+							<div class="level1">
+								<div class="panel">
+									<div class="poster">
+										<video class="video" width="544" height="306" onclick="playPauseVideo(this);">
+											<source src="display38" type="video/mp4">
+										</video>
+										<div class="play-button-wrapper">
+											<div title="Play video" class="play-gif" id="circle-play-b">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+													<path
+														d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>Tiki Wiki CMS Groupware</p>
+							</div>
+							<div class="level1">
+								<div class="panel">
+									<div class="poster">
+										<video id="video" class="video" width="544" height="306"
+											onclick="playPauseVideo(this);">
+											<source src="display38" type="video/mp4">
+										</video>
+										<div class="play-button-wrapper">
+											<div title="Play video" class="play-gif" id="circle-play-b">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+													<path
+														d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>Tiki has now an Rest API</p>
+
+							</div>
+							<div class="level1">
+								<div class="panel">
+									<div class="poster">
+										<video class="video" width="544" height="306"
+											onclick="this.paused?this.play():this.pause()">
+											<source src="display38" type="video/mp4">
+										</video>
+										<div class="play-button-wrapper">
+											<div title="Play video" class="play-gif" id="circle-play-b">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+													<path
+														d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>Wiki Suite is a FLOSS</p>
+							</div>
+
+							<div class="level1">
+								<div class="panel">
+									<div class="poster">
+										<video class="video" width="544" height="306" onclick="playPauseVideo(this);">
+											<source src="display38" type="video/mp4">
+										</video>
+										<div class="play-button-wrapper">
+											<div title="Play video" class="play-gif" id="circle-play-b">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+													<path
+														d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>Tiki Roundtable 2022</p>
+							</div>
+
+							<div class="level1">
+								<div class="panel">
+									<div class="poster">
+										<video class="video" width="544" height="306" onclick="playPauseVideo(this);">
+											<source src="display38" type="video/mp4">
+										</video>
+										<div class="play-button-wrapper">
+											<div title="Play video" class="play-gif" id="circle-play-b">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+													<path
+														d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>Trackers and Cypht</p>
+							</div>
+
+							<div class="level1">
+								<div class="panel">
+									<div class="poster">
+										<video class="video" width="544" height="306" onclick="playPauseVideo(this);">
+											<source src="display38" type="video/mp4">
+										</video>
+										<div class="play-button-wrapper">
+											<div title="Play video" class="play-gif" id="circle-play-b">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+													<path
+														d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>Tiki Mysql SSL Connection with AWS Lightsail</p>
+							</div>
+							<div class="level2">
+								<div class="panel">
+									<div class="poster">
+										<video class="video" width="544" height="306" onclick="playPauseVideo(this);">
+											<source src="display38" type="video/mp4">
+										</video>
+										<div class="play-button-wrapper">
+											<div title="Play video" class="play-gif" id="circle-play-b">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+													<path
+														d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>Tiki is a community that grows fast </p>
+							</div>
+							<div class="level3">
+								<div class="panel">
+									<div class="poster">
+										<video class="video" width="544" height="306" onclick="playPauseVideo(this);">
+											<source src="display38" type="video/mp4">
+										</video>
+										<div class="play-button-wrapper">
+											<div title="Play video" class="play-gif" id="circle-play-b">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+													<path
+														d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>Virtualmin and webmin is on port 10000 by default on your domain</p>
+							</div>
+							<div class="level2">
+								<div class="panel">
+									<div class="poster">
+										<video class="video" width="544" height="306" onclick="playPauseVideo(this);">
+											<source src="display38" type="video/mp4">
+										</video>
+										<div class="play-button-wrapper">
+											<div title="Play video" class="play-gif" id="circle-play-b">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+													<path
+														d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>Tiki is maintained by the community</p>
+							</div>
+							<div class="level1">
+								<div class="panel">
+									<div class="poster">
+										<video class="video" width="544" height="306" onclick="playPauseVideo(this);">
+											<source src="display38" type="video/mp4">
+										</video>
+										<div class="play-button-wrapper">
+											<div title="Play video" class="play-gif" id="circle-play-b">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+													<path
+														d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>Tiki has security integrated</p>
+							</div>
+						</div>
+					</div>
+					<div id="pager"></div>
+					<div class="video-carousel-text"></div>
+					<img class="video-carousel-button-left" src="display71"
+						alt="video carousel navigate left">
+					<img class="video-carousel-button-right" src="display70"
+						alt="video carousel navigate right">
+				</div>
+			</div>
+		</div>
+	</div>
+
+{HTML}
+{JQ()}
+$(document).ready(function () {
+    var $root = $(".video-carousel-root"),
+        $slider = $root.find(".video-carousel-slider"),
+        $slides = $slider.children("div"),
+        slideWidth = $slides.width(),
+        $leftButton = $root.find(".video-carousel-button-left"),
+        $rightButton = $root.find(".video-carousel-button-right"),
+        $allSlideButtons = $root.find(".video-carousel-button-left, .video-carousel-button-right"),
+        $slideText = $root.find(".video-carousel-text"),
+        isAnimating = false,
+        transition = { "left": slideLeftTransition, "right": slideRightTransition },
+        video = $('video'),
+        slideTimer, myPlayer, video_counter = 0;
+
+    setClasses();
+    setText();
+    //addPlayButton(video);
+
+    if (!supportsTransitions()) transition = { "left": slideLeftNoTransition, "right": slideRightNoTransition };
+    $allSlideButtons.click(slideButtonClick);
+    $leftButton.click(transition.left);
+    $rightButton.click(transition.right);
+    //slideTimer = setInterval(transition.right, 7000);
+
+    function slideButtonClick() {
+        clearInterval(slideTimer);
+    }
+    function slideLeftNoTransition() {
+        $slider.prepend($slides.last());
+        setClasses();
+        setText();
+    }
+    function slideRightNoTransition() {
+        $slider.append($slides.first());
+        setClasses();
+        setText();
+    }
+    function slideLeftTransition() {
+        if (isAnimating) return;
+        isAnimating = true;
+        $slideText.empty();
+
+        $slider.css("left", -slideWidth + "px");
+        $slider.prepend($slides.last());
+        setClasses();
+        $slider.animate({ left: "0px" }, 500, function () {
+            setText();
+            isAnimating = false;
+        });
+    }
+    function slideRightTransition() {
+        if (isAnimating) return;
+        isAnimating = true;
+        $slideText.empty();
+
+        $slider.append($slides.first());
+        setClasses();
+        $slider.prepend($slides.last().clone());
+        $slides = $slider.children("div");
+        $slider.animate({ left: -slideWidth + "px" }, 500, function () {
+            $slides.eq(0).remove();
+            setClasses();
+            $slider.css("left", "0px");
+            setText();
+            isAnimating = false;
+        });
+    }
+    function setClasses() {
+        $slides = $slider.children("div");
+        $slides.removeClass();
+        $slides.eq(0).addClass("level1");
+        $slides.eq(1).addClass("level2");
+        $slides.eq(2).addClass("level3");
+        $slides.eq(3).addClass("level2");
+        $slides.eq(4).addClass("level1");
+
+        $slides.off("click");
+
+        $slides.eq(1).on("click", function () { slideButtonClick(); transition.left(); });
+        $slides.eq(3).on("click", function () { slideButtonClick(); transition.right(); });
+    }
+    function setText() {
+        $slideText.html($slides.eq(2).find("p").html());
+    }
+    function supportsTransitions() {
+        var b = document.body || document.documentElement,
+            s = b.style,
+            p = 'transition';
+        if (typeof s[p] == 'string') { return true; }
+
+        // Tests for vendor specific prop
+        var v = ['Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
+        p = p.charAt(0).toUpperCase() + p.substr(1);
+        for (var i = 0; i < v.length; i++) {
+            if (typeof s[v[i] + p] == 'string') { return true; }
+        }
+        return false;
+    }
+
+    function playVideo() {
+        video.play();
+    }
+    function pauseVideo() {
+        video.pause();
+    }
+
+    function addPlayButton(toVideo) {
+        var buttonContainer = $(".play-button-wrapper");
+        buttonContainer.html(
+            '<div title="Play video" class="play-gif" id="circle-play-b"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><path d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" /></svg></div>'
+        );
+    }
+
+    /* Tests purposes */
+    var $videos_ = $('.video');
+    var playButtonSGV = '<div title="Play video" class="play-gif" id="circle-play-b">';
+    playButtonSGV += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">';
+    playButtonSGV += '<path d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" /></svg></div>';
+
+    function count_videos() {
+        $videos_.each(async function (index) {
+            alert(index);
+        });
+    }
+var $pages = $(".video").length,
+				$pager = $("#pager"),
+				dots = "";
+
+			for (let i = 0; i < $pages; i++) {
+
+				dots += "<a href>· </a>";
+
+			}
+
+			$pager.html("<p>" + dots + "</p>");
+
+			function playPauseVideo(video_) {
+
+				var playButton = video_.find('play-button-wrapper');
+
+				if (video_.paused) {
+					video_.play();
+					playButton.hide();
+				} else {
+					video_.pause();
+					playButton.show();
+				}
+			}
+		
+});
+{JQ}
+
+{JS()}
+
+// For the play bouton.
+// To do, make it a 
+
+const video = document.getElementById("video");
+const circlePlayButton = document.getElementById("circle-play-b");
+
+function togglePlay() {
+    if (video.paused || video.ended) {
+        video.play();
+    } else {
+        video.pause();
+    }
+}
+
+circlePlayButton.addEventListener("click", togglePlay);
+video.addEventListener("playing", function () {
+    circlePlayButton.style.opacity = 0;
+});
+video.addEventListener("pause", function () {
+    circlePlayButton.style.opacity = 1;
+});
+
+// To be cleaned 
+// This is for test purposes
+var allVideos = document.getElementsByTagName('video');
+		var allPlayButtonContainers = document.getElementsByClassName('play-button-wrapper');
+
+		var playButtonSGV = '<div title="Play video" class="play-gif" id="circle-play-b">';
+		playButtonSGV += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">';
+		playButtonSGV += '<path d="M40 0a40 40 0 1040 40A40 40 0 0040 0zM26 61.56V18.44L64 40z" /></svg></div>';
+{JS}
+
+
+
