@@ -14,7 +14,7 @@ $(document).ready(function () {
         isAnimating = false,
         transition = { "left": slideLeftTransition, "right": slideRightTransition },
         $video = $("video"),
-        slideTimer, myPlayer, video_counter = 0;
+        slideTimer = 0;
 
     setClasses();
     setText();
@@ -25,12 +25,28 @@ $(document).ready(function () {
     $leftButton.click(transition.left);
     $rightButton.click(transition.right);
     // Uncomment this line to enable auto slide
-    // slideTimer = setInterval(transition.right, 7000);
+    /* slideTimer = setInterval(transition.right, 7000); */
+    // Make sure to show play button once video ends
+    $video.on("ended", function () {
+        resetPlayButtonsStatus();
+    });
 
     function slideButtonClick() {
         pauseAllVideos();
         resetPlayButtonsStatus();
         clearInterval(slideTimer);
+    }
+
+    // To slide the third level videos twice
+    function slideVideoClick(direction) {
+        pauseAllVideos();
+        resetPlayButtonsStatus();
+        slideTimer = setInterval(
+            direction === 'right' ? transition.right : transition.left
+            , 100);
+        setTimeout(function () {
+            clearInterval(slideTimer)
+        }, 1000);
     }
 
     function slideLeftNoTransition() {
@@ -88,8 +104,10 @@ $(document).ready(function () {
 
         $slides.off("click");
 
+        $slides.eq(0).on("click", function () { slideVideoClick('left'); transition.left(); });
         $slides.eq(1).on("click", function () { slideButtonClick(); transition.left(); });
         $slides.eq(3).on("click", function () { slideButtonClick(); transition.right(); });
+        $slides.eq(4).on("click", function () { slideVideoClick('right'); transition.right(); });
 
     }
 
@@ -141,7 +159,24 @@ $(document).ready(function () {
         });
     }
 
-    $video.on("ended", function(){
-        resetPlayButtonsStatus();
-    });
+    var options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1.0
+    };
+    var callback = function (entries, observer) {
+
+        entries.each(function (entry) {
+            if (entry.target.class == 'video') {
+                if (entry.isIntersecting) {
+                    entry.target.play();
+                } else {
+                    entry.target.pause();
+                }
+            }
+        });
+
+    }
+    var observer = new IntersectionObserver(callback, options);
+    observer.observe(document.querySelector('.video'));
 });
