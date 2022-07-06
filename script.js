@@ -31,6 +31,26 @@ $(document).ready(function () {
         resetPlayButtonsStatus();
     });
 
+    $.fn.isInViewport = function () {
+        var elementTop = $(this).offset().top;
+        var elementBottom = elementTop + $(this).outerHeight();
+
+        var viewportTop = $(window).scrollTop();
+        var viewportBottom = viewportTop + $(window).height();
+
+        return elementBottom > viewportTop && elementTop < viewportBottom;
+    };
+
+    $(window).on('resize scroll', function () {
+
+        $video.each(function () {
+            if (!$(this).isInViewport()) {
+                $(this).get(0).pause();
+                resetPlayButtonsStatus();
+            }
+        });
+    });
+
     function slideButtonClick() {
         pauseAllVideos();
         resetPlayButtonsStatus();
@@ -158,25 +178,4 @@ $(document).ready(function () {
             $(this).css('display', 'block');
         });
     }
-
-    var options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 1.0
-    };
-    var callback = function (entries, observer) {
-
-        entries.each(function (entry) {
-            if (entry.target.class == 'video') {
-                if (entry.isIntersecting) {
-                    entry.target.play();
-                } else {
-                    entry.target.pause();
-                }
-            }
-        });
-
-    }
-    var observer = new IntersectionObserver(callback, options);
-    observer.observe(document.querySelector('.video'));
 });
