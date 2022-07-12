@@ -10,6 +10,13 @@ body {
 	overflow: hidden;
 }
 
+#vc_slider_container {
+	margin: 0px;
+	height: 100%;
+	width: 100%;
+	
+}
+
 .carousel-root {
 	margin: 0;
 	padding: 0;
@@ -147,7 +154,6 @@ body {
 }
 
 .video-carousel-text,
-#pager,
 .visible-on-mobile {
 	width: 100%;
 	margin: 8px auto;
@@ -156,14 +162,6 @@ body {
 	font-family: Roboto, Arial, sans-serif;
 	color: #f4f5fa;
 	display: block;
-}
-
-#pager a {
-	font-weight: bolder;
-	font-size: 37px;
-	text-decoration: inherit;
-	color: inherit;
-	cursor: pointer;
 }
 
 .clearfix:after {
@@ -223,7 +221,7 @@ svg {
 	transform: scale(1.5);
 	justify-content: center;
 	align-items: center;
-	background-color: #6610f2;
+	background-color: transparent;
 	padding-top: 105px;
 	padding-left: 0px;
 	padding-right: 0px;
@@ -308,7 +306,7 @@ div.inner,
 
 	.video-carousel-root,
 	.inner,
-	.container,
+	#vc_slider_container,
 	#videos {
 		max-width: 768px ! important;
 		height: auto;
@@ -378,7 +376,7 @@ div.inner,
 
 	.video-carousel-root,
 	.inner,
-	.container,
+	#vc_slider_container,
 	#videos {
 		max-width: 768px ! important;
 		height: auto;
@@ -439,7 +437,7 @@ div.inner,
 
 	.video-carousel-root,
 	.inner,
-	.container,
+	#vc_slider_container,
 	#videos {
 		max-width: 768px ! important;
 		height: auto;
